@@ -35,7 +35,7 @@ const input = {
 // create dataset / variable to store get accidents ids 
     const actorRunId = Apify.getEnv('APIFY_ACTOR_RUN_ID').actorRunId;
     console.log(actorRunId)
-    const dataset = await Apify.openDataset(`ACCIDENTS-GPS_${actorRunId}`);
+    const dataset = await Apify.openDataset(`ACCIDENTS-GPS-${actorRunId}`);
     const from = moment(input.dateFrom);
     const to = moment(input.dateTo);
     const areaCode = input.areaCode;
@@ -109,7 +109,7 @@ const input = {
     console.log(`From ${from} to ${to} pushed ${gpsAll.length} accidents`);
     }
      
-    const dataset2 = await Apify.openDataset(`ACCIDENTS-GPS_${actorRunId}`);
+    const dataset2 = await Apify.openDataset(`ACCIDENTS-GPS-${actorRunId}`);
     const datasetValues = await dataset2.getData();
 
     // accident id is under p1 key
