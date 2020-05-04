@@ -43,7 +43,7 @@ const input = {
     let actualStr = '';
     let actualToStr = '';
 
-    const gpsAll = [];
+    let gpsAll = [];
     let resultAll = 0;
 
     const datasetCheck = await dataset.getData()
@@ -101,7 +101,7 @@ const input = {
             let json = await response.json();
             let gpsData = json.data;
 
-            gpsAll.push(gpsData)
+            gpsAll = gpsAll.concat(gpsData)
             resultAll += gpsData.length;
             console.log(`From ${actualStr} to ${actualToStr} get ${gpsData.length} accidents, all count now: ${resultAll}`);
 
