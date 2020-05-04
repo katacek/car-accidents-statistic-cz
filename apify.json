@@ -1,0 +1,7 @@
+{
+	"name": "car-accidents-statistics-cz",
+	"version": "0.0",
+	"buildTag": "latest",
+	"env": null,
+	"template": "cheerio_crawler"
+}
