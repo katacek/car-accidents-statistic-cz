@@ -27,7 +27,7 @@ async function tableTojson(table,$)
 Apify.main(async () => {
 
 const input = {
-        dateFrom: '2020-01-15',
+        dateFrom: '2020-03-20',
         dateTo: '2020-03-20',
         areaCode: 3018
     }
@@ -45,8 +45,10 @@ const input = {
 
     const gpsAll = [];
     let resultAll = 0;
+
+    const datasetCheck = await dataset.getData()
     
-    if (dataset != null) {
+    if (datasetCheck.items.length === 0) {
         while (actual.isSameOrBefore(to) )
         {
             // from to in the same month and year
@@ -106,7 +108,7 @@ const input = {
         }
 
     await dataset.pushData(gpsAll);
-    console.log(`From ${from} to ${to} pushed ${gpsAll.length} accidents`);
+    console.log(`From ${from} to ${to} pushed ${resultAll} accidents`);
     }
      
     const dataset2 = await Apify.openDataset(`ACCIDENTS-GPS-${actorRunId}`);
