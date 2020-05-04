@@ -43,7 +43,7 @@ const input = {
     let actualStr = '';
     let actualToStr = '';
 
-    let gpsAll = {};
+    let gpsAll = [];
     let resultAll = 0;
 
     const datasetCheck = await dataset.getData()
@@ -101,7 +101,7 @@ const input = {
             let json = await response.json();
             let gpsData = json.data;
 
-            gpsAll = {...gpsData}
+            gpsAll = gpsAll.concat(gpsData)
             resultAll += gpsData.length;
             console.log(`From ${actualStr} to ${actualToStr} get ${gpsData.length} accidents, all count now: ${resultAll}`);
 
@@ -109,12 +109,10 @@ const input = {
 
     await dataset.pushData(gpsAll);
     console.log(`From ${from} to ${to} pushed ${resultAll} accidents`);
-    console.log(dataset)
     }
      
     const dataset2 = await Apify.openDataset(`ACCIDENTS-GPS-${actorRunId}`);
     const datasetValues = await dataset2.getData();
-    console.log(datasetValues)
 
     // accident id is under p1 key
     const urlList = datasetValues.items.map(x => (`https://nehody.cdv.cz/detail.php?p1=${x.p1}`));
