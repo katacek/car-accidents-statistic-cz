@@ -33,7 +33,9 @@ const input = {
     }
 
 // create dataset / variable to store get accidents ids 
-    const dataset = await Apify.openDataset('ACCIDENTS-GPS');
+    const actorRunId = Apify.getEnv('APIFY_ACTOR_RUN_ID');
+    console.log(actorRunId)
+    const dataset = await Apify.openDataset(`ACCIDENTS-GPS_${actorRunId}`);
     const from = moment(input.dateFrom);
     const to = moment(input.dateTo);
     const areaCode = input.areaCode;
@@ -41,69 +43,73 @@ const input = {
     let actualStr = '';
     let actualToStr = '';
 
+    const gpsAll = [];
     let resultAll = 0;
     
-
-    while (actual.isSameOrBefore(to) )
-    {
-        // from to in the same month and year
-        if (moment(from).endOf('month').isSame(moment(to).endOf('month'))){
-            actualStr = from.format('YYYY-MM-DD');
-            actualToStr = to.format('YYYY-MM-DD');
-            actual.add(1, 'month').startOf('month');;
-        }
-        // from to in different month, to not the end of month
-        else if (!moment(to).isSame(moment(to).endOf('month'))){
-            actualStr = actual.format('YYYY-MM-DD');
-            // while end of actual month is before to
-            if (moment(actual).endOf('month').isBefore(to)){
+    if (dataset != null) {
+        while (actual.isSameOrBefore(to) )
+        {
+            // from to in the same month and year
+            if (moment(from).endOf('month').isSame(moment(to).endOf('month'))){
+                actualStr = from.format('YYYY-MM-DD');
+                actualToStr = to.format('YYYY-MM-DD');
+                actual.add(1, 'month').startOf('month');;
+            }
+            // from to in different month, to not the end of month
+            else if (!moment(to).isSame(moment(to).endOf('month'))){
+                actualStr = actual.format('YYYY-MM-DD');
+                // while end of actual month is before to
+                if (moment(actual).endOf('month').isBefore(to)){
+                    actualToStr = moment(actual).endOf('month').format('YYYY-MM-DD');
+                    actual.add(1, 'month').startOf('month');
+                } else {
+                actualToStr = to.format('YYYY-MM-DD');
+                actual.add(1, 'month').startOf('month');
+                }
+            }
+            // from to in different month, to is the end of month
+            else {
+                actualStr = actual.format('YYYY-MM-DD');
                 actualToStr = moment(actual).endOf('month').format('YYYY-MM-DD');
                 actual.add(1, 'month').startOf('month');
-            } else {
-            actualToStr = to.format('YYYY-MM-DD');
-            actual.add(1, 'month').startOf('month');
-            }
+            };
+            
+            let response =
+                await fetch("https://nehody.cdv.cz/handlers/loadMap.php", {
+                    "headers": {
+                        "accept": "application/json, text/javascript, */*; q=0.01",
+                        "accept-language": "cs,en;q=0.9,en-US;q=0.8,es;q=0.7,de;q=0.6,ru;q=0.5,sk;q=0.4,pl;q=0.3",
+                        "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+                        "sec-fetch-dest": "empty",
+                        "sec-fetch-mode": "cors",
+                        "sec-fetch-site": "same-origin",
+                        "x-requested-with": "XMLHttpRequest"
+                    },
+                    "referrer": "https://nehody.cdv.cz/statistics.php",
+                    "referrerPolicy": "no-referrer-when-downgrade",
+                    "body": `span=day&dateFrom=${actualStr}&dateTo=${actualToStr}&types%5B%5D=nehody&area%5Bcode%5D=${areaCode}&extent%5Bnortheast%5D%5Blat%5D=50.30033127520898&extent%5Bnortheast%5D%5Blng%5D=15.243455614318853&extent%5Bsouthwest%5D%5Blat%5D=49.81807587932694&extent%5Bsouthwest%5D%5Blng%5D=13.687774385681157&zoom=10&layers%5BaccidentType%5D=accidents-injury&layers%5BaccidentDetail%5D%5B%5D=accidents-injury-death&layers%5BaccidentDetail%5D%5B%5D=accidents-injury-heavy&layers%5BaccidentDetail%5D%5B%5D=accidents-injury-light&layers%5BaccidentDetail%5D%5B%5D=accidents-injury-no`,
+                    "method": "POST",
+                    "mode": "cors",
+                    "credentials": "include"
+                });
+            
+
+            // as a response, we get the json with accident id, lt, lg 
+            
+            let json = await response.json();
+            let gpsData = json.data;
+
+            gpsAll.push(gpsData)
+            resultAll += gpsData.length;
+            console.log(`From ${actualStr} to ${actualToStr} get ${gpsData.length} accidents, all count now: ${resultAll}`);
+
         }
-        // from to in different month, to is the end of month
-        else {
-            actualStr = actual.format('YYYY-MM-DD');
-            actualToStr = moment(actual).endOf('month').format('YYYY-MM-DD');
-            actual.add(1, 'month').startOf('month');
-        };
-        
-        let response =
-            await fetch("https://nehody.cdv.cz/handlers/loadMap.php", {
-                "headers": {
-                    "accept": "application/json, text/javascript, */*; q=0.01",
-                    "accept-language": "cs,en;q=0.9,en-US;q=0.8,es;q=0.7,de;q=0.6,ru;q=0.5,sk;q=0.4,pl;q=0.3",
-                    "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-                    "sec-fetch-dest": "empty",
-                    "sec-fetch-mode": "cors",
-                    "sec-fetch-site": "same-origin",
-                    "x-requested-with": "XMLHttpRequest"
-                },
-                "referrer": "https://nehody.cdv.cz/statistics.php",
-                "referrerPolicy": "no-referrer-when-downgrade",
-                "body": `span=day&dateFrom=${actualStr}&dateTo=${actualToStr}&types%5B%5D=nehody&area%5Bcode%5D=${areaCode}&extent%5Bnortheast%5D%5Blat%5D=50.30033127520898&extent%5Bnortheast%5D%5Blng%5D=15.243455614318853&extent%5Bsouthwest%5D%5Blat%5D=49.81807587932694&extent%5Bsouthwest%5D%5Blng%5D=13.687774385681157&zoom=10&layers%5BaccidentType%5D=accidents-injury&layers%5BaccidentDetail%5D%5B%5D=accidents-injury-death&layers%5BaccidentDetail%5D%5B%5D=accidents-injury-heavy&layers%5BaccidentDetail%5D%5B%5D=accidents-injury-light&layers%5BaccidentDetail%5D%5B%5D=accidents-injury-no`,
-                "method": "POST",
-                "mode": "cors",
-                "credentials": "include"
-            });
-        
 
-        // as a response, we get the json with accident id, lt, lg 
-        
-        let json = await response.json();
-        let gpsData = json.data;
-        
-
-        resultAll += gpsData.length;
-        await dataset.pushData(gpsData);
-        console.log(`For ${actualStr} pushed ${gpsData.length} accidents, all count now: ${resultAll}`);
-
+    await dataset.pushData(gpsAll);
+    console.log(`From ${from} to ${to} pushed ${gpsAll.length} accidents`);
     }
      
-    const dataset2 = await Apify.openDataset('ACCIDENTS-GPS');
+    const dataset2 = await Apify.openDataset(`ACCIDENTS-GPS_${actorRunId}`);
     const datasetValues = await dataset2.getData();
 
     // accident id is under p1 key
