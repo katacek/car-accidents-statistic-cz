@@ -43,7 +43,7 @@ const input = {
     let actualStr = '';
     let actualToStr = '';
 
-    const gpsAll = {};
+    let gpsAll = {};
     let resultAll = 0;
 
     const datasetCheck = await dataset.getData()
