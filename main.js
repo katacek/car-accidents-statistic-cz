@@ -123,7 +123,7 @@ const input = {
 
     console.log('request list opened')
    
-    const datasetDetail = await Apify.openDataset('CAR-ACCIDENTS-STATISTICS-CZ');
+    const datasetDetail = await Apify.openDataset(`CAR-ACCIDENTS-STATISTICS-CZ-${actorRunId}`);
                 
     const basicCrawler = new Apify.BasicCrawler({
         requestList,
