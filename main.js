@@ -33,7 +33,7 @@ const input = {
     }
 
 // create dataset / variable to store get accidents ids 
-    const actorRunId = Apify.getEnv('APIFY_ACTOR_RUN_ID');
+    const actorRunId = Apify.getEnv('APIFY_ACTOR_RUN_ID').actorRunId;
     console.log(actorRunId)
     const dataset = await Apify.openDataset(`ACCIDENTS-GPS_${actorRunId}`);
     const from = moment(input.dateFrom);
