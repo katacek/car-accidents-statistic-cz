@@ -33,9 +33,7 @@ const input = {
     }
 
 // create dataset / variable to store get accidents ids 
-  const dataset = await Apify.openDataset('ACCIDENTS-GPS');
-  // to solve: const 'to' not ending the last day of month, from not starting on the first day of month
-  // from, to and areaCode will be as input
+    const dataset = await Apify.openDataset('ACCIDENTS-GPS');
     const from = moment(input.dateFrom);
     const to = moment(input.dateTo);
     const areaCode = input.areaCode;
