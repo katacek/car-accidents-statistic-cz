@@ -1,0 +1,30 @@
+{
+    "title": "Car accidents statistics in the Czech republic",
+    "description": "Returns car accidents statistics for a given period and locality",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "dateFrom": {
+            "title": "Date from",
+            "type": "string",
+            "description": "Date from in format YYYY-MM-DD",
+            "prefill": "2020-03-01",
+            "editor": "textfield"
+	    },
+        "dateTo": {
+            "title": "Date to",
+            "type": "string",
+            "description": "Date from in format YYYY-MM-DD",
+            "prefill": "2020-03-31",
+            "editor": "textfield"
+        },
+        "locality": {
+            "title": "Locality",
+            "type": "string",
+            "description": "Locality id number - please, find the right one at dedicated github file",
+            "prefill": "3018",
+            "editor": "textfield"
+        }
+    },
+    "required": ["dateFrom", "dateTo", "locality"]
+}
