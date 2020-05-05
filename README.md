@@ -1,6 +1,6 @@
 # Car accidents statistics - Czech Republic
 
-Apify actor to download car accidents statistics in the CR from ["Centrum dopravního výzkumu"](https://nehody.cdv.cz/). 
+Apify actor to download car accidents statistics in the CR from ["Centrum dopravního výzkumu"](https://nehody.cdv.cz/). The actor creates two datasets. The first one named ACCIDENTS-GPS-<ACTOR_RUN_ID> is a helper file, the second one named CAR-ACCIDENTS-STATISTICS-CZ-<ACTOR_RUN_ID> is the final one containing all data. Example dataset output is [here](https://api.apify.com/v2/datasets/SU5LbVAKqf1LUWbmS/items?format=json&clean=1)
 
 ## Input 
 
@@ -25,4 +25,4 @@ https://api.apify.com/v2/acts/katerinahronik~car-accidents-statistics-cz?token=<
 
 ## CU usage 
 
-Depends on time period - approximatelly 1CU per one area and one year of data.
+Depends on time period - approximatelly 1CU per one area and one year.
