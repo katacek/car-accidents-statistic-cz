@@ -26,11 +26,13 @@ async function tableTojson(table,$)
 
 Apify.main(async () => {
 
-const input = {
-        dateFrom: '2020-03-20',
-        dateTo: '2020-03-20',
-        areaCode: 3018
-    }
+// const input = {
+//         dateFrom: '2020-03-20',
+//         dateTo: '2020-03-20',
+//         areaCode: 3018
+//     }
+
+const input = await Apify.getValue('INPUT');
 
 // create dataset / variable to store get accidents ids 
     const actorRunId = Apify.getEnv('APIFY_ACTOR_RUN_ID').actorRunId;
