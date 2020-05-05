@@ -1,6 +1,6 @@
 {
     "title": "Car accidents statistics in the Czech republic",
-    "description": "Returns car accidents statistics for a given period and locality",
+    "description": "Returns car accidents statistics for a given period and area",
     "type": "object",
     "schemaVersion": 1,
     "properties": {
@@ -18,10 +18,10 @@
             "prefill": "2020-03-31",
             "editor": "textfield"
         },
-        "locality": {
-            "title": "Locality",
+        "areaCode": {
+            "title": "Area code",
             "type": "string",
-            "description": "Locality id number - please, find the right one at dedicated github file",
+            "description": "Area code - please, find the right one at dedicated github file",
             "prefill": "3018",
             "editor": "textfield"
         }
