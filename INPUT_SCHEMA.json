@@ -21,7 +21,7 @@
         "areaCode": {
             "title": "Area code",
             "type": "string",
-            "description": "Area code - please, find the right one at dedicated github file",
+            "description": "Area code - please, find the right one at areaCodes.csv github file",
             "prefill": "3018",
             "editor": "textfield"
         }
