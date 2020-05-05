@@ -26,5 +26,5 @@
             "editor": "textfield"
         }
     },
-    "required": ["dateFrom", "dateTo", "locality"]
+    "required": ["dateFrom", "dateTo", "areaCode"]
 }
