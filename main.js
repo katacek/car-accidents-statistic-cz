@@ -36,14 +36,14 @@ const input = await Apify.getValue('INPUT');
 
 // create dataset / variable to store get accidents ids 
     const actorRunId = Apify.getEnv('APIFY_ACTOR_RUN_ID').actorRunId;
-    console.log(actorRunId)
+    //console.log(actorRunId)
     const dataset = await Apify.openDataset(`ACCIDENTS-GPS-${actorRunId}`);
     const from = moment(input.dateFrom);
     const to = moment(input.dateTo);
     const areaCode = parseInt(input.areaCode);
-    console.log(from)
-    console.log(to)
-    console.log(areaCode)
+    //console.log(from)
+    //console.log(to)
+    //console.log(areaCode)
     let actual = moment(from);
     let actualStr = '';
     let actualToStr = '';
@@ -121,7 +121,7 @@ const input = await Apify.getValue('INPUT');
 
     // accident id is under p1 key
     const urlList = datasetValues.items.map(x => (`https://nehody.cdv.cz/detail.php?p1=${x.p1}`));
-    console.log(urlList.length);
+    //console.log(urlList.length);
 
     // on apify app change request list to this:
     const requestList = await Apify.openRequestList('urlList', urlList);
