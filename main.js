@@ -40,7 +40,10 @@ const input = await Apify.getValue('INPUT');
     const dataset = await Apify.openDataset(`ACCIDENTS-GPS-${actorRunId}`);
     const from = moment(input.dateFrom);
     const to = moment(input.dateTo);
-    const areaCode = input.areaCode;
+    const areaCode = parseInt(input.areaCode);
+    console.log(from)
+    console.log(to)
+    console.log(areaCode)
     let actual = moment(from);
     let actualStr = '';
     let actualToStr = '';
