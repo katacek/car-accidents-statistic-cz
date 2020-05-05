@@ -94,7 +94,7 @@ const input = await Apify.getValue('INPUT');
                     },
                     "referrer": "https://nehody.cdv.cz/statistics.php",
                     "referrerPolicy": "no-referrer-when-downgrade",
-                    "body": `span=day&dateFrom=${actualStr}&dateTo=${actualToStr}&types%5B%5D=nehody&area%5Bcode%5D=${areaCode}&extent%5Bnortheast%5D%5Blat%5D=50.30033127520898&extent%5Bnortheast%5D%5Blng%5D=15.243455614318853&extent%5Bsouthwest%5D%5Blat%5D=49.81807587932694&extent%5Bsouthwest%5D%5Blng%5D=13.687774385681157&zoom=10&layers%5BaccidentType%5D=accidents-injury&layers%5BaccidentDetail%5D%5B%5D=accidents-injury-death&layers%5BaccidentDetail%5D%5B%5D=accidents-injury-heavy&layers%5BaccidentDetail%5D%5B%5D=accidents-injury-light&layers%5BaccidentDetail%5D%5B%5D=accidents-injury-no`,
+                    "body": `span=day&dateFrom=${actualStr}&dateTo=${actualToStr}&types%5B%5D=nehody&area%5Bcode%5D=${areaCode}&extent%5Bnortheast%5D%5Blat%5D=51&extent%5Bnortheast%5D%5Blng%5D=19&extent%5Bsouthwest%5D%5Blat%5D=48.5&extent%5Bsouthwest%5D%5Blng%5D=11.5&zoom=10&layers%5BaccidentType%5D=accidents-injury&layers%5BaccidentDetail%5D%5B%5D=accidents-injury-death&layers%5BaccidentDetail%5D%5B%5D=accidents-injury-heavy&layers%5BaccidentDetail%5D%5B%5D=accidents-injury-light&layers%5BaccidentDetail%5D%5B%5D=accidents-injury-no`,
                     "method": "POST",
                     "mode": "cors",
                     "credentials": "include"
